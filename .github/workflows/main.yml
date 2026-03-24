@@ -19,7 +19,6 @@ jobs:
           java-version: '17'
           distribution: 'temurin'
 
-      # Кэширование ускоряет повторные сборки в 3-5 раз
       - name: Cache Buildozer directory
         uses: actions/cache@v4
         with:
@@ -37,7 +36,7 @@ jobs:
 
       - name: Build with Buildozer
         run: |
-          # Флаг --accept-sdk-license автоматически соглашается со всеми лицензиями Google
+          # Флаг --accept-sdk-license критически важен для обхода ошибки с лицензиями
           buildozer -v android debug --accept-sdk-license
         env:
           USER: runner
