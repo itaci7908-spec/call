@@ -5,20 +5,21 @@ jobs:
   build:
     runs-on: ubuntu-22.04
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout code
+        uses: actions/checkout@v4
 
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
           python-version: '3.10'
 
-      # Явно устанавливаем Java 17 (критично для Gradle)
       - name: Set up JDK 17
         uses: actions/setup-java@v4
         with:
           java-version: '17'
           distribution: 'temurin'
 
+      # Кэширование ускорит повторные сборки в 3-5 раз
       - name: Cache Buildozer directory
         uses: actions/cache@v4
         with:
@@ -36,15 +37,13 @@ jobs:
 
       - name: Build with Buildozer
         run: |
-          # Принимаем лицензии отдельной командой
-          yes | buildozer android licenses
-          # Запускаем сборку с подробным логом, чтобы видеть прогресс
-          buildozer -v android debug
+          # Флаг --accept-sdk-license автоматически соглашается со всеми лицензиями Google
+          buildozer -v android debug --accept-sdk-license
         env:
           USER: runner
 
       - name: Upload APK
         uses: actions/upload-artifact@v4
         with:
-          name: package
+          name: AIEat-App-Debug
           path: bin/*.apk
