@@ -36,8 +36,9 @@ jobs:
 
       - name: Build with Buildozer
         run: |
-          # Используем команду без 'yes', так как современные версии Buildozer справляются сами, 
-          # либо добавляем флаг --accept-sdk-license
+          # Принимаем лицензии отдельной командой
+          yes | buildozer android licenses
+          # Запускаем сборку с подробным логом, чтобы видеть прогресс
           buildozer -v android debug
         env:
           USER: runner
