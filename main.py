@@ -23,7 +23,7 @@ from kivymd.uix.textfield import MDTextField
 from kivymd.uix.filemanager import MDFileManager
 
 # ИИ и Работа с изображениями
-import google.generativeai as genai
+
 from PIL import Image
 
 # --- КОНФИГУРАЦИЯ ИИ ---
